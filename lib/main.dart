@@ -37,6 +37,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: true,
+      theme: ThemeData(
+          textTheme: TextTheme(
+            bodyText2: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),      
       initialRoute: 'Start_Page',
       routes: {
         'Start_Page': (context) => const Start_Page(),

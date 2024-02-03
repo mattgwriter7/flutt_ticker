@@ -58,27 +58,80 @@ class _Start_PageState extends State<Start_Page> {
       },      
       child: SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.black,
           appBar: AppBar(
-            title: Text( filename ),
+            title: Text( 'Ticker' ),
             centerTitle: true,
+            elevation: 0,
           ), 
           body: Container(
             width: double.infinity,
             color: Colors.transparent,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children : 
-                [ 
-                  ElevatedButton(
-                    child: const Text( 'End_Page >>' ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('End_Page');         
-                      return;
-                    },
-                  ),                
+              children: [
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 60),
+                        Text('WEDNESDAY',
+                            style: TextStyle( fontSize: 28)),
+                        Text('MAY 09 2024',
+                            style: TextStyle( fontSize: 20)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text('9:29', style: TextStyle( fontSize: 64)),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10,0,0,10),
+                              child: Text('PM', style: TextStyle( fontSize: 32)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('27m',
+                            style: TextStyle( fontSize: 72)),
+                            Text('05',
+                            style: TextStyle( fontSize: 20)),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,30,0,40),
+                          child: SizedBox(
+                            width: 220,
+                            height: 60,
+                            child: ElevatedButton(
+                              child: Text('start', style: TextStyle( fontSize: 28)),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                ),             
               ],
-            ),  
+            ),
           ),
         ),
       ),
