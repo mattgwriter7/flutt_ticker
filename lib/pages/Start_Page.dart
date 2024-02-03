@@ -22,6 +22,8 @@ class _Start_PageState extends State<Start_Page> {
   // (this page) variables
   final String filename = 'Start_Page.dart';
   static String _button_label = 'start';
+  static Color _button_color = Colors.white12;
+  static Color _button_label_color = Colors.white10;
 
   // (this page) init and dispose
   @override
@@ -67,6 +69,7 @@ class _Start_PageState extends State<Start_Page> {
             title: Text( 'Ticker' ),
             centerTitle: true,
             elevation: 0,
+            backgroundColor: Colors.white12,
           ), 
           body: Container(
             width: double.infinity,
@@ -135,15 +138,24 @@ class _Start_PageState extends State<Start_Page> {
                                   context.read<Ticker>().startTimer();
                                   setState(() {
                                     _button_label = 'stop';
+                                    _button_color = Colors.green;
+                                    _button_label_color = Colors.white;
                                   });
                                 }
                                 else {
                                   context.read<Ticker>().stopTimer();
                                   setState(() {
                                     _button_label = 'start';
+                                    _button_color = Colors.white12;
+                                    _button_label_color = Colors.white10;
                                   });
                                 }
                               },
+                              // _button_color
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _button_color, 
+                                foregroundColor: _button_label_color,
+                              ),
                             ),
                           ),
                         ),
