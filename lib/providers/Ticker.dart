@@ -80,13 +80,30 @@ class Ticker with ChangeNotifier {
 
   String gatherMinutes() {
     String str = '';
+    late int modified_minutes;
+    late int modified_hours;
+    String minutes_str = '';
+
     if( _timer_sec == 0 && _timer_min == 0 ) { 
       str = '0';
     }
     else {
-      str = _timer_min.toString();
-      //  WILLFIX:  Should I add logic so if time > 1 hour then
-      //            "h" and "m" get added for minutes/seconds?
+      if( _timer_min < 91 ) {
+        str = _timer_min.toString();
+      }
+      else {
+        //  get hours and minutes
+        modified_hours = (_timer_min / 60).floor();
+        modified_minutes = _timer_min % 60;
+        //  add a zero if minutes less than 10
+        if ( modified_minutes < 10 ) { 
+          minutes_str = '0' + modified_minutes.toString();
+        }
+        else {
+          minutes_str = modified_minutes.toString();  
+        }  
+        str = modified_hours.toString() + 'h' + minutes_str;
+      }
       _timer_color = Colors.white;
     }
     return str;
