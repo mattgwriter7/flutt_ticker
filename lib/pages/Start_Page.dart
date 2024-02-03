@@ -7,8 +7,6 @@ import 'package:wakelock/wakelock.dart';
 import 'dart:async';
 import 'dart:io';
 
-//  this page is Stateful (just to serve as an example)
-
 //  classes
 import '../classes/Config.dart';
 import '../classes/Utils.dart';
@@ -26,7 +24,7 @@ class _Start_PageState extends State<Start_Page> {
   // (this page) variables
   final String filename = 'Start_Page.dart';
   static String _button_label = 'start';
-  static Color _button_color = Colors.white12;
+  static Color _button_color = Colors.white12;          //  "start" button is grey at first
   static Color _button_label_color = Colors.white10;
   static bool _show_hud = false;
 
@@ -37,7 +35,7 @@ class _Start_PageState extends State<Start_Page> {
     Utils.log( filename, 'initState()' );
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
 
-    //  init Ticker
+    //  init the Ticker << START THE MAGIC!! >>
     Provider.of<Ticker>(context, listen: false).initTicker();
   }
 
