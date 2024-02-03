@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //  classes
@@ -12,14 +13,17 @@ import './pages/Start_Page.dart';
 import './pages/End_Page.dart';
 import 'providers/Ticker.dart';
 
-//  This code is literally from the "flutter create" boilerplate,
-//  but I removed the counter app (and kept the underlying structure),
-//  and some unecessary comments and variables...
-
-void main() {
-runApp( MultiProvider (
-  providers: [ ChangeNotifierProvider(create: (_) => Ticker()),],
-  child: MyApp()) );
+//  Portrait mode is forced here...
+//  See: https://stackoverflow.com/questions/49418332/flutter-how-to-prevent-device-orientation-changes-and-force-portrait
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);  
+  runApp( MultiProvider (
+    providers: [ ChangeNotifierProvider(create: (_) => Ticker()),],
+    child: MyApp()) 
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -40,7 +44,7 @@ class MyApp extends StatelessWidget {
     _buildTriggered();
 
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: TextTheme(
             bodyText2: TextStyle(

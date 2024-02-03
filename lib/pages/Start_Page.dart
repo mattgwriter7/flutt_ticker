@@ -1,6 +1,10 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //  this page is Stateful (just to serve as an example)
@@ -22,6 +26,9 @@ class _Start_PageState extends State<Start_Page> {
   // (this page) variables
   final String filename = 'Start_Page.dart';
   static String _button_label = 'start';
+  static Color _button_color = Colors.white12;
+  static Color _button_label_color = Colors.white10;
+  static bool _show_hud = false;
 
   // (this page) init and dispose
   @override
@@ -67,92 +74,154 @@ class _Start_PageState extends State<Start_Page> {
             title: Text( 'Ticker' ),
             centerTitle: true,
             elevation: 0,
+            backgroundColor: Colors.white12,
           ), 
-          body: Container(
-            width: double.infinity,
-            color: Colors.transparent,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.transparent,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 60),
-                        Text( context.watch<Ticker>().show_day,
-                            style: TextStyle( fontSize: 28)),
-                        Text( context.watch<Ticker>().show_date,
-                            style: TextStyle( fontSize: 20)),
-                        Row(
+          body: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        width: double.infinity,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                              child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32)),
+                            SizedBox(height: 60),
+                            Text( context.watch<Ticker>().show_day,
+                                style: TextStyle( fontSize: 28)),
+                            Text( context.watch<Ticker>().show_date,
+                                style: TextStyle( fontSize: 20)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,10),
+                                  child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32)),
+                                ),
+                              ],
                             ),
                           ],
-                        ),
-                      ],
-                    )
-                  ),
+                        )
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text( context.watch<Ticker>().show_min,
+                                style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
+                                //Text(context.watch<Ticker>().show_seconds,
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(3,8,0,0),
+                                  child: Text(context.watch<Ticker>().show_sec, 
+                                  style: TextStyle( fontSize: 20)),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0,30,0,40),
+                              child: SizedBox(
+                                width: 220,
+                                height: 60,
+                                child: ElevatedButton(
+                                  child: Text( _button_label, style: TextStyle( fontSize: 28)),
+                                  onPressed: () {
+                                    if( !context.read<Ticker>().timer_started ) {
+                                      context.read<Ticker>().startTimer();
+                                      setState(() {
+                                        _button_label = 'stop';
+                                        _button_color = Colors.green;
+                                        _button_label_color = Colors.white;
+                                        _show_hud = false;
+                                      });
+                                    }
+                                    else {
+                                      context.read<Ticker>().stopTimer();
+                                      setState(() {
+                                        _button_label = 'start';
+                                        _button_color = Colors.white12;
+                                        _button_label_color = Colors.white10;
+                                        _show_hud = true;
+                                      });
+                                    }
+                                  },
+                                  // _button_color
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: _button_color, 
+                                    foregroundColor: _button_label_color,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ),
+                    ),             
+                  ],
                 ),
-                Expanded(
-                  child: Container(
-                    color: Colors.transparent,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text( context.watch<Ticker>().show_min,
-                            style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
-                            //Text(context.watch<Ticker>().show_seconds,
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(3,8,0,0),
-                              child: Text(context.watch<Ticker>().show_sec, 
-                              style: TextStyle( fontSize: 20)),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0,30,0,40),
-                          child: SizedBox(
-                            width: 220,
-                            height: 60,
-                            child: ElevatedButton(
-                              child: Text( _button_label, style: TextStyle( fontSize: 28)),
-                              onPressed: () {
-                                if( !context.read<Ticker>().timer_started ) {
-                                  context.read<Ticker>().startTimer();
-                                  setState(() {
-                                    _button_label = 'stop';
-                                  });
-                                }
-                                else {
-                                  context.read<Ticker>().stopTimer();
-                                  setState(() {
-                                    _button_label = 'start';
-                                  });
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ),
-                ),             
-              ],
-            ),
+              ),
+
+              Visibility(
+                visible: _show_hud,
+                child: Positioned(
+                  left: 10,
+                  top: 10,
+                  child: TextButton.icon(
+                    icon: const Icon( Icons.cancel, color: Colors.white), // Your icon here
+                    label: Text('Quit App', style: TextStyle( color: Colors.white, decoration: TextDecoration.underline, )),
+                    onPressed: (){
+                      Timer(Duration( milliseconds: Config.short_delay), () {
+                        //  exit app (after short delay) based on
+                        //  https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
+                        if (Platform.isAndroid) {
+                          SystemNavigator.pop();
+                        } 
+                        else if (Platform.isIOS) {
+                          exit(0);
+                        }
+                      }); 
+                    }
+                  ), 
+                ),
+              ),
+
+              Visibility(
+                visible: _show_hud,
+                child: Positioned(
+                  right: 10,
+                  top: 10,
+                  child: TextButton.icon(
+                    icon: const Icon( Icons.refresh, color: Colors.white), // Your icon here
+                    label: Text('Reset', style: TextStyle( color: Colors.white, decoration: TextDecoration.underline, )),
+                    onPressed: (){
+                        //  reset the timer quickly (no delay)
+                        context.read<Ticker>().resetTimer();
+                        setState(() {
+                          _button_label = 'start';
+                          _button_color = Colors.white12;
+                          _button_label_color = Colors.white10;
+                          _show_hud = false;                          
+                        });
+                    }
+                  ), 
+                ),
+              )              
+            ],  
           ),
         ),
       ),
