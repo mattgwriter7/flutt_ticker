@@ -1,11 +1,11 @@
 // ignore_for_file: camel_case_types
 
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
+import 'dart:async';
+import 'dart:io';
 
 //  this page is Stateful (just to serve as an example)
 
@@ -102,8 +102,8 @@ class _Start_PageState extends State<Start_Page> {
                               children: [
                                 Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                                  child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32)),
+                                  padding: const EdgeInsets.fromLTRB(5,0,0,8),
+                                  child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32, color: Colors.white54)),
                                 ),
                               ],
                             ),
@@ -124,10 +124,9 @@ class _Start_PageState extends State<Start_Page> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text( context.watch<Ticker>().show_min,
-                                style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
-                                //Text(context.watch<Ticker>().show_seconds,
+                                style: TextStyle( fontSize: 96, color: context.watch<Ticker>().show_timer_color )),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(3,8,0,0),
+                                  padding: const EdgeInsets.fromLTRB(3,15,0,0),
                                   child: Text(context.watch<Ticker>().show_sec, 
                                   style: TextStyle( fontSize: 20)),
                                 ),
@@ -141,22 +140,30 @@ class _Start_PageState extends State<Start_Page> {
                                 child: ElevatedButton(
                                   child: Text( _button_label, style: TextStyle( fontSize: 28)),
                                   onPressed: () {
-                                    if( !context.read<Ticker>().timer_started ) {
+                                    String stamp = 'timer at ${context.read<Ticker>().show_min}m${context.read<Ticker>().show_sec}s';
+                                    if ( stamp == 'timer at 0ms' ) stamp = 'timer (for 1st time)';
+                                    if ( !context.read<Ticker>().timer_started ) {
+                                      Utils.log( filename, 'START $stamp');
                                       context.read<Ticker>().startTimer();
                                       setState(() {
                                         _button_label = 'stop';
                                         _button_color = Colors.green;
                                         _button_label_color = Colors.white;
                                         _show_hud = false;
+                                        //  make screen stay awake!
+                                        Wakelock.enable();
                                       });
                                     }
                                     else {
+                                      Utils.log( filename, 'STOP timer');
                                       context.read<Ticker>().stopTimer();
                                       setState(() {
                                         _button_label = 'start';
                                         _button_color = Colors.white12;
                                         _button_label_color = Colors.white10;
                                         _show_hud = true;
+                                        //  allow screen to sleep
+                                        Wakelock.disable();
                                       });
                                     }
                                   },
@@ -176,6 +183,15 @@ class _Start_PageState extends State<Start_Page> {
                 ),
               ),
 
+
+
+
+
+
+
+
+              //  TOP "LINKS" HUD
+              //  ( for "Quot App" and "Reset")
               Visibility(
                 visible: _show_hud,
                 child: Positioned(

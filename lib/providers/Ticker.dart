@@ -105,7 +105,7 @@ class Ticker with ChangeNotifier {
     DateTime dt = DateTime.now();
     _clock_date = DateFormat("MMMM dd, yyyy").format(dt);
     _clock_day = DateFormat("EEEEE").format(dt);
-    _clock_time = DateFormat("hh:mm").format(dt);
+    _clock_time = DateFormat("h:mm").format(dt);
     _clock_phase = DateFormat("a").format(dt);
     return;
   }
