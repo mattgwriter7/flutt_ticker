@@ -25,7 +25,7 @@ class Ticker with ChangeNotifier {
 
   static int            _timer_sec = 0;
   static int            _timer_min = 0;
-  static Color          _timer_color = Colors.white24;
+  static Color          _timer_color = Colors.white12;
 
   static bool           _timer_started = false;
   static bool           _timer_never_started = true;
@@ -43,6 +43,16 @@ class Ticker with ChangeNotifier {
   get timer_started => _timer_started;
 
   //  setters
+  void resetTimer() {
+    _timer_sec = 0;
+    _timer_min = 0;
+    _timer_color = Colors.white12;
+
+    _timer_started = false;
+    _timer_never_started = true;
+    return;
+  }
+
   void startTimer () { 
     if ( _timer_never_started ) {
       _timer_never_started = false;

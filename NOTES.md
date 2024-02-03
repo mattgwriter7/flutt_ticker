@@ -5,7 +5,14 @@ This is a place for stuff that doesn't fit under
 ## GOALS
 I wanted to make a simple timing app.
 
-## DETAILED DETAILS
+## DETAILS
+* It always displays current time and date
+* if timer inactive, start button is light grey
+* if timer active, button is green
+  + this serves to indicate the timer is running!
+* only when you stop a running timer do you get a HUD with:
+  + Quit App
+  + Reset (timer)  
 
 ### NAMING CONVENTIONS
 * variables are "lowercase_with_hyphens"
