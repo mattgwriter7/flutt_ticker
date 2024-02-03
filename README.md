@@ -1,21 +1,23 @@
 # flutt_ticker version 1.0
 
-This is a super-simple starting place for Flutter projects.
+This is a super-simple meeting timer
 
 ## LEFT OFF
-* added Config and Utils classes
-* made Start page stateful (and added some hooks)
+* added Provider
+* have basic functionaility in place
 
 ## NEXT
 * ?
 
 ## FUTURE
-* add Provider?
-* add widgets folder (for drawer widget)?
-* add assets (like images)?
+* smooth it out so it doesn't "jump" when timer starts
+    + making seconds "00" in black to start will do the trick...
+* add hours when minutes over 60
+    + like: 1h07m
+* add "paused" indicator
+* add reset link (when paused)
+* monospaced font?        
 
 ## NOTES
 (For detailed notes see [NOTES.md](./NOTES.md) )
-
-Basically, there are 2 pages: Start and End. You can navigate between them.
 

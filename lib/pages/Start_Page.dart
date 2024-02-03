@@ -21,6 +21,7 @@ class _Start_PageState extends State<Start_Page> {
 
   // (this page) variables
   final String filename = 'Start_Page.dart';
+  static String _button_label = 'start';
 
   // (this page) init and dispose
   @override
@@ -112,10 +113,14 @@ class _Start_PageState extends State<Start_Page> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('27m',
-                            style: TextStyle( fontSize: 72)),
-                            Text(context.watch<Ticker>().show_seconds,
-                            style: TextStyle( fontSize: 20)),
+                            Text( context.watch<Ticker>().show_min,
+                            style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
+                            //Text(context.watch<Ticker>().show_seconds,
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(3,8,0,0),
+                              child: Text(context.watch<Ticker>().show_sec, 
+                              style: TextStyle( fontSize: 20)),
+                            ),
                           ],
                         ),
                         Padding(
@@ -124,8 +129,21 @@ class _Start_PageState extends State<Start_Page> {
                             width: 220,
                             height: 60,
                             child: ElevatedButton(
-                              child: Text('start', style: TextStyle( fontSize: 28)),
-                              onPressed: () {},
+                              child: Text( _button_label, style: TextStyle( fontSize: 28)),
+                              onPressed: () {
+                                if( !context.read<Ticker>().timer_started ) {
+                                  context.read<Ticker>().startTimer();
+                                  setState(() {
+                                    _button_label = 'stop';
+                                  });
+                                }
+                                else {
+                                  context.read<Ticker>().stopTimer();
+                                  setState(() {
+                                    _button_label = 'start';
+                                  });
+                                }
+                              },
                             ),
                           ),
                         ),
