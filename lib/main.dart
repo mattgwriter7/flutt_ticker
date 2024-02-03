@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //  classes
 import '../classes/Config.dart';
@@ -9,13 +10,16 @@ import '../classes/Utils.dart';
 //  pages
 import './pages/Start_Page.dart';
 import './pages/End_Page.dart';
+import 'providers/Ticker.dart';
 
 //  This code is literally from the "flutter create" boilerplate,
 //  but I removed the counter app (and kept the underlying structure),
 //  and some unecessary comments and variables...
 
 void main() {
-  runApp(const MyApp());
+runApp( MultiProvider (
+  providers: [ ChangeNotifierProvider(create: (_) => Ticker()),],
+  child: MyApp()) );
 }
 
 class MyApp extends StatelessWidget {

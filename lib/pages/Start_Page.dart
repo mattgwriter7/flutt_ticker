@@ -1,12 +1,14 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //  this page is Stateful (just to serve as an example)
 
 //  classes
 import '../classes/Config.dart';
 import '../classes/Utils.dart';
+import '../providers/Ticker.dart';
 
 class Start_Page extends StatefulWidget {
   const Start_Page({super.key});
@@ -27,7 +29,8 @@ class _Start_PageState extends State<Start_Page> {
     Utils.log( filename, 'initState()' );
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
 
-    //  setupApp();
+    //  init Ticker
+    Provider.of<Ticker>(context, listen: false).initTicker();
   }
 
   @override
@@ -38,7 +41,7 @@ class _Start_PageState extends State<Start_Page> {
 
   // (this page) methods
   void _buildTriggered() {
-    Utils.log( filename, '_buildTriggered()');
+    //  Utils.log( filename, '_buildTriggered()');
   }
 
   // addPostFrameCallback" is called after build completed 
@@ -78,18 +81,18 @@ class _Start_PageState extends State<Start_Page> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(height: 60),
-                        Text('WEDNESDAY',
+                        Text( context.watch<Ticker>().show_day,
                             style: TextStyle( fontSize: 28)),
-                        Text('MAY 09 2024',
+                        Text( context.watch<Ticker>().show_date,
                             style: TextStyle( fontSize: 20)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text('9:29', style: TextStyle( fontSize: 64)),
+                            Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                              child: Text('PM', style: TextStyle( fontSize: 32)),
+                              child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32)),
                             ),
                           ],
                         ),
@@ -111,7 +114,7 @@ class _Start_PageState extends State<Start_Page> {
                           children: [
                             Text('27m',
                             style: TextStyle( fontSize: 72)),
-                            Text('05',
+                            Text(context.watch<Ticker>().show_seconds,
                             style: TextStyle( fontSize: 20)),
                           ],
                         ),
