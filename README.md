@@ -2,6 +2,7 @@
 This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTES.md) )
 
 ## LEFT OFF
+* formatted time (after 90 min)
 * added wakelock pkg
 * forced portrait
 
@@ -16,7 +17,6 @@ This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTE
 * add some logic for state change (when other apps sorce suspension)
 
 ## CONSIDERATIONS
-* make it so after 90 minutes THEN is uses this format: 1h31m
 * should I outline start button in thin green keyline (to give it a little pop?)
 * should I add any effects or animations? (I think no -- keep it simple)
 * add mechanism to show only time/date?

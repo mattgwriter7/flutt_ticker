@@ -83,6 +83,14 @@ class _Start_PageState extends State<Start_Page> {
                 color: Colors.transparent,
                 child: Column(
                   children: [
+
+
+
+
+
+
+
+                    //  CLOCK BOX (Top Half)
                     Expanded(
                       child: Container(
                         color: Colors.transparent,
@@ -91,7 +99,7 @@ class _Start_PageState extends State<Start_Page> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: 60),
+                            SizedBox(height: 70),
                             Text( context.watch<Ticker>().show_day,
                                 style: TextStyle( fontSize: 28)),
                             Text( context.watch<Ticker>().show_date,
@@ -111,72 +119,83 @@ class _Start_PageState extends State<Start_Page> {
                         )
                       ),
                     ),
+
+
+
+
+
+
+
+                    //  TIMER BOX (Bottom Half)
                     Expanded(
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text( context.watch<Ticker>().show_min,
-                                style: TextStyle( fontSize: 96, color: context.watch<Ticker>().show_timer_color )),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(3,15,0,0),
-                                  child: Text(context.watch<Ticker>().show_sec, 
-                                  style: TextStyle( fontSize: 20)),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0,30,0,40),
-                              child: SizedBox(
-                                width: 220,
-                                height: 60,
-                                child: ElevatedButton(
-                                  child: Text( _button_label, style: TextStyle( fontSize: 28)),
-                                  onPressed: () {
-                                    String stamp = 'timer at ${context.read<Ticker>().show_min}m${context.read<Ticker>().show_sec}s';
-                                    if ( stamp == 'timer at 0ms' ) stamp = 'timer (for 1st time)';
-                                    if ( !context.read<Ticker>().timer_started ) {
-                                      Utils.log( filename, 'START $stamp');
-                                      context.read<Ticker>().startTimer();
-                                      setState(() {
-                                        _button_label = 'stop';
-                                        _button_color = Colors.green;
-                                        _button_label_color = Colors.white;
-                                        _show_hud = false;
-                                        //  make screen stay awake!
-                                        Wakelock.enable();
-                                      });
-                                    }
-                                    else {
-                                      Utils.log( filename, 'STOP timer');
-                                      context.read<Ticker>().stopTimer();
-                                      setState(() {
-                                        _button_label = 'start';
-                                        _button_color = Colors.white12;
-                                        _button_label_color = Colors.white10;
-                                        _show_hud = true;
-                                        //  allow screen to sleep
-                                        Wakelock.disable();
-                                      });
-                                    }
-                                  },
-                                  // _button_color
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: _button_color, 
-                                    foregroundColor: _button_label_color,
+                      child: Visibility(
+                        visible: context.watch<Ticker>().timer_ready,
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text( context.watch<Ticker>().show_min,
+                                  style: TextStyle( fontSize: 96, color: context.watch<Ticker>().show_timer_color )),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(3,15,0,0),
+                                    child: Text(context.watch<Ticker>().show_sec, 
+                                    style: TextStyle( fontSize: 20)),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0,20,0,40),
+                                child: SizedBox(
+                                  width: 200,
+                                  height: 65,
+                                  child: ElevatedButton(
+                                    child: Text( _button_label, style: TextStyle( fontSize: 28)),
+                                    onPressed: () {
+                                      String stamp = 'timer at ${context.read<Ticker>().show_min}m${context.read<Ticker>().show_sec}s';
+                                      if ( stamp == 'timer at 0ms' ) stamp = 'timer (for 1st time)';
+                                      if ( !context.read<Ticker>().timer_started ) {
+                                        Utils.log( filename, 'START $stamp');
+                                        context.read<Ticker>().startTimer();
+                                        setState(() {
+                                          _button_label = 'stop';
+                                          _button_color = Colors.green;
+                                          _button_label_color = Colors.white;
+                                          _show_hud = false;
+                                          //  make screen stay awake!
+                                          Wakelock.enable();
+                                        });
+                                      }
+                                      else {
+                                        Utils.log( filename, 'STOP timer');
+                                        context.read<Ticker>().stopTimer();
+                                        setState(() {
+                                          _button_label = 'start';
+                                          _button_color = Colors.white12;
+                                          _button_label_color = Colors.white10;
+                                          _show_hud = true;
+                                          //  allow screen to sleep
+                                          Wakelock.disable();
+                                        });
+                                      }
+                                    },
+                                    // _button_color
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: _button_color, 
+                                      foregroundColor: _button_label_color,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )
+                            ],
+                          )
+                        ),
                       ),
                     ),             
                   ],

@@ -27,6 +27,7 @@ class Ticker with ChangeNotifier {
   static int            _timer_min = 0;
   static Color          _timer_color = Colors.white12;
 
+  static bool           _timer_ready = false;
   static bool           _timer_started = false;
   static bool           _timer_never_started = true;
 
@@ -39,6 +40,7 @@ class Ticker with ChangeNotifier {
   get show_phase => _clock_phase;
   get show_sec => gatherSeconds();
   get show_min => gatherMinutes();
+  get timer_ready => _timer_ready;
   get show_timer_color => _timer_color;
   get timer_started => _timer_started;
 
@@ -80,13 +82,30 @@ class Ticker with ChangeNotifier {
 
   String gatherMinutes() {
     String str = '';
+    late int modified_minutes;
+    late int modified_hours;
+    String minutes_str = '';
+
     if( _timer_sec == 0 && _timer_min == 0 ) { 
       str = '0';
     }
     else {
-      str = _timer_min.toString();
-      //  WILLFIX:  Should I add logic so if time > 1 hour then
-      //            "h" and "m" get added for minutes/seconds?
+      if( _timer_min < 91 ) {
+        str = _timer_min.toString();
+      }
+      else {
+        //  get hours and minutes
+        modified_hours = (_timer_min / 60).floor();
+        modified_minutes = _timer_min % 60;
+        //  add a zero if minutes less than 10
+        if ( modified_minutes < 10 ) { 
+          minutes_str = '0' + modified_minutes.toString();
+        }
+        else {
+          minutes_str = modified_minutes.toString();  
+        }  
+        str = modified_hours.toString() + 'h' + minutes_str;
+      }
       _timer_color = Colors.white;
     }
     return str;
@@ -103,10 +122,13 @@ class Ticker with ChangeNotifier {
   
   void updateClock() {
     DateTime dt = DateTime.now();
+    //  first do clock UI
     _clock_date = DateFormat("MMMM dd, yyyy").format(dt);
     _clock_day = DateFormat("EEEEE").format(dt);
     _clock_time = DateFormat("h:mm").format(dt);
     _clock_phase = DateFormat("a").format(dt);
+    //  make sure to show the timer, too
+    _timer_ready = true;
     return;
   }
 
