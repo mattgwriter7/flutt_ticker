@@ -16,6 +16,12 @@ dependencies:
   provider: ^6.0.2
   intl: ^0.17.0
   wakelock: ^0.6.2
-  
+  flutter_launcher_icons: "^0.12.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/icons/launcher.png"
+
 flutter:
   uses-material-design: true

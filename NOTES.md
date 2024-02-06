@@ -22,3 +22,8 @@ I wanted to make a simple timing app.
 * REALLY_IMPORTANT variables can be all caps and underscored
    + but there should only be 1 or 2 "really important" variables in an app  
 
+### LAUNCHER ICON
+The latest version did not work. I used:
+* flutter_launcher_icons: "^0.12.0"
+and then in the command line used:
+* flutter pub run flutter_launcher_icons
