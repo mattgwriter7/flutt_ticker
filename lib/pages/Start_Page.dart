@@ -105,12 +105,19 @@ class _Start_PageState extends State<Start_Page> {
                                 style: TextStyle( fontSize: 20)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              //crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(5,0,0,8),
-                                  child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32, color: Colors.white54)),
+                                  padding: const EdgeInsets.fromLTRB(4,0,0,0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text( context.watch<Ticker>().show_clock_seconds, style: TextStyle( fontSize: 18, color: Colors.white54)),
+                                      Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32, color: Colors.white54)),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -141,9 +148,9 @@ class _Start_PageState extends State<Start_Page> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text( context.watch<Ticker>().show_min,
-                                  style: TextStyle( fontSize: 96, color: context.watch<Ticker>().show_timer_color )),
+                                  style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(3,15,0,0),
+                                    padding: const EdgeInsets.fromLTRB(3,11,0,0),
                                     child: Text(context.watch<Ticker>().show_sec, 
                                     style: TextStyle( fontSize: 20)),
                                   ),

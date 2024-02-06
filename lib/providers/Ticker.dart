@@ -21,7 +21,7 @@ class Ticker with ChangeNotifier {
   static String         _clock_date = '';
   static String         _clock_time = '';
   static String         _clock_phase = '';
-
+  static String         _clock_sec = '';
   static int            _timer_sec = 0;
   static int            _timer_min = 0;
   static Color          _timer_color = Colors.white12;
@@ -39,6 +39,7 @@ class Ticker with ChangeNotifier {
   get show_day => _clock_day;
   get show_date => _clock_date;
   get show_time => _clock_time;
+  get show_clock_seconds => _clock_sec;
   get show_phase => _clock_phase;
   get show_sec => gatherSeconds();
   get show_min => gatherMinutes();
@@ -140,7 +141,11 @@ class Ticker with ChangeNotifier {
     _clock_date = DateFormat("MMMM dd, yyyy").format(dt);
     _clock_day = DateFormat("EEEEE").format(dt);
     _clock_time = DateFormat("h:mm").format(dt);
+    _clock_sec = DateFormat("ss").format(dt);
     _clock_phase = DateFormat("a").format(dt);
+    //  uncomment next line to only show clock seconds sometimes...
+    //  if ( timer_started == true || _timer_never_started == true ) _clock_sec = '';
+    
     //  make sure to show the timer, too (so it will "pop in" at
     //  the start when the clock UI appears)
     _timer_ready = true;

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class Config {
   
   static const  String    app_name                  = "flutt_ticker";
-  static const  String    app_version               = "1.05.alpha";
+  static const  String    app_version               = "1.06.alpha";
   
   //  timeouts and delays
   static int              server_timeout            = 10;     // seconds
