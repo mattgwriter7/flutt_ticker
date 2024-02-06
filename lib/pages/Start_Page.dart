@@ -69,12 +69,14 @@ class _Start_PageState extends State<Start_Page> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.black,
+          /*
           appBar: AppBar(
             title: Text( 'Ticker' ),
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.white12,
-          ), 
+          ),
+          */ 
           body: Stack(
             children: [
               Container(
@@ -206,6 +208,7 @@ class _Start_PageState extends State<Start_Page> {
                         Material(
                           color: Colors.black,
                           child: InkWell(
+                            customBorder: CircleBorder(),
                             onTap: () {
                               Timer(Duration( milliseconds: Config.short_delay), () {
                                 setState(() {
@@ -226,7 +229,7 @@ class _Start_PageState extends State<Start_Page> {
                                     style: TextStyle( color: Colors.white24)
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,0,0,100),
+                                    padding: const EdgeInsets.fromLTRB(0,0,0,20),
                                     child: Icon(
                                       Icons.emergency,
                                       color: Colors.white24,
@@ -253,15 +256,15 @@ class _Start_PageState extends State<Start_Page> {
 
 
               //  TOP "LINKS" HUD
-              //  ( for "Quot App" and "Reset")
+              //  ( for "Quit App" and "Reset")
               Visibility(
                 visible: _show_hud,
                 child: Positioned(
                   left: 10,
                   top: 10,
                   child: TextButton.icon(
-                    icon: const Icon( Icons.cancel, color: Colors.white), // Your icon here
-                    label: Text('Quit App', style: TextStyle( color: Colors.white, decoration: TextDecoration.underline, )),
+                    icon: const Icon( Icons.cancel, color: Colors.green), // Your icon here
+                    label: Text('Quit App', style: TextStyle( color: Colors.green, decoration: TextDecoration.underline, )),
                     onPressed: (){
                       Timer(Duration( milliseconds: Config.short_delay), () {
                         //  exit app (after short delay) based on
@@ -284,8 +287,8 @@ class _Start_PageState extends State<Start_Page> {
                   right: 10,
                   top: 10,
                   child: TextButton.icon(
-                    icon: const Icon( Icons.refresh, color: Colors.white), // Your icon here
-                    label: Text('Reset', style: TextStyle( color: Colors.white, decoration: TextDecoration.underline, )),
+                    icon: const Icon( Icons.refresh, color: Colors.green), // Your icon here
+                    label: Text('Reset', style: TextStyle( color: Colors.green, decoration: TextDecoration.underline, )),
                     onPressed: (){
                         //  reset the timer quickly (no delay)
                         context.read<Ticker>().resetTimer();
@@ -293,7 +296,8 @@ class _Start_PageState extends State<Start_Page> {
                           _button_label = 'start';
                           _button_color = Colors.white12;
                           _button_label_color = Colors.white10;
-                          _show_hud = false;                          
+                          _show_hud = false;            
+                          _hide_timer_container = true;              
                         });
                     }
                   ), 
