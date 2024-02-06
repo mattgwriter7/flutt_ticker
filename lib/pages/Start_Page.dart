@@ -27,6 +27,7 @@ class _Start_PageState extends State<Start_Page> {
   static Color _button_color = Colors.white12;          //  "start" button is grey at first
   static Color _button_label_color = Colors.white10;
   static bool _show_hud = false;
+  static bool _hide_timer_container = true;
 
   // (this page) init and dispose
   @override
@@ -104,12 +105,19 @@ class _Start_PageState extends State<Start_Page> {
                                 style: TextStyle( fontSize: 20)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              //crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text( context.watch<Ticker>().show_time, style: TextStyle( fontSize: 64)),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(5,0,0,8),
-                                  child: Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32, color: Colors.white54)),
+                                  padding: const EdgeInsets.fromLTRB(4,0,0,0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text( context.watch<Ticker>().show_clock_seconds, style: TextStyle( fontSize: 18, color: Colors.white54)),
+                                      Text( context.watch<Ticker>().show_phase, style: TextStyle( fontSize: 32, color: Colors.white54)),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -128,7 +136,7 @@ class _Start_PageState extends State<Start_Page> {
                     Expanded(
                       child: Visibility(
                         visible: context.watch<Ticker>().timer_ready,
-                        child: Container(
+                        child: _hide_timer_container == false ? Container(
                           color: Colors.transparent,
                           width: double.infinity,
                           child: Column(
@@ -140,9 +148,9 @@ class _Start_PageState extends State<Start_Page> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text( context.watch<Ticker>().show_min,
-                                  style: TextStyle( fontSize: 96, color: context.watch<Ticker>().show_timer_color )),
+                                  style: TextStyle( fontSize: 72, color: context.watch<Ticker>().show_timer_color )),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(3,15,0,0),
+                                    padding: const EdgeInsets.fromLTRB(3,11,0,0),
                                     child: Text(context.watch<Ticker>().show_sec, 
                                     style: TextStyle( fontSize: 20)),
                                   ),
@@ -193,6 +201,43 @@ class _Start_PageState extends State<Start_Page> {
                               ),
                             ],
                           )
+                        )
+                        :  
+                        Material(
+                          color: Colors.black,
+                          child: InkWell(
+                            onTap: () {
+                              Timer(Duration( milliseconds: Config.short_delay), () {
+                                setState(() {
+                                  if(mounted) _hide_timer_container = false;
+                                });
+                              });
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('tap to',
+                                    style: TextStyle( color: Colors.white24)
+                                  ),
+                                  Text('show timer',
+                                    style: TextStyle( color: Colors.white24)
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,0,0,100),
+                                    child: Icon(
+                                      Icons.emergency,
+                                      color: Colors.white24,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                                  
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),             

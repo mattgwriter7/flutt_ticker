@@ -2,6 +2,7 @@
 This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTES.md) )
 
 ## LEFT OFF
+* added clock seconds tick
 * formatted time (after 90 min)
 * added wakelock pkg
 * forced portrait
@@ -10,9 +11,6 @@ This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTE
 * ?
 
 ## FUTURE
-* smooth it out so it doesn't "jump" when timer starts
-    + making seconds "00" in black to start will do the trick...
-    + cancel and reset Timer interval, too
 * monospaced font?       
 * add some logic for state change (when other apps sorce suspension)
 
