@@ -27,6 +27,7 @@ class _Start_PageState extends State<Start_Page> {
   static Color _button_color = Colors.white12;          //  "start" button is grey at first
   static Color _button_label_color = Colors.white10;
   static bool _show_hud = false;
+  static bool _hide_timer_container = true;
 
   // (this page) init and dispose
   @override
@@ -128,7 +129,7 @@ class _Start_PageState extends State<Start_Page> {
                     Expanded(
                       child: Visibility(
                         visible: context.watch<Ticker>().timer_ready,
-                        child: Container(
+                        child: _hide_timer_container == false ? Container(
                           color: Colors.transparent,
                           width: double.infinity,
                           child: Column(
@@ -193,6 +194,43 @@ class _Start_PageState extends State<Start_Page> {
                               ),
                             ],
                           )
+                        )
+                        :  
+                        Material(
+                          color: Colors.black,
+                          child: InkWell(
+                            onTap: () {
+                              Timer(Duration( milliseconds: Config.short_delay), () {
+                                setState(() {
+                                  if(mounted) _hide_timer_container = false;
+                                });
+                              });
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('tap to',
+                                    style: TextStyle( color: Colors.white24)
+                                  ),
+                                  Text('show timer',
+                                    style: TextStyle( color: Colors.white24)
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,0,0,100),
+                                    child: Icon(
+                                      Icons.emergency,
+                                      color: Colors.white24,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                                  
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),             
