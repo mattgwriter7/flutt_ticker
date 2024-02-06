@@ -1,7 +1,8 @@
-# flutt_ticker version 1.02
+# flutt_ticker version 1.07
 This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTES.md) )
 
 ## LEFT OFF
+* added launcher icon
 * added clock seconds tick
 * formatted time (after 90 min)
 * added wakelock pkg
