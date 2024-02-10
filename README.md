@@ -1,6 +1,9 @@
 # flutt_ticker version 1.07
 This is a super-simple meeting timer.  (For detailed notes see [NOTES.md](./NOTES.md) )
 
+I have a Youtube demo, and even explain things as I walk through it:   
+[Youtube demo](https://youtube.com/shorts/zWHZ6TKRIO8)    
+
 ## LEFT OFF
 * added launcher icon
 * added clock seconds tick
